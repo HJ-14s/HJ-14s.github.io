@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Defense and Intelligence Portfolio | Forones & Gulmatico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght{font-weight-list}:300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            skyblue: '#38bdf8', // Sky-500
+                            success: '#4ade80', // Green-400
+                            alert: '#f87171', // Red-400
+                            warning: '#fbbf24' // Amber-400
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s ease-in-out infinite',
+                        'scan': 'scan 2s infinite linear'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        scan: {
+                            '0%': { transform: 'translateX(0%)', backgroundColor: 'rgba(74, 222, 128, 0.5)' },
+                            '49%': { transform: 'translateX(100%)', backgroundColor: 'rgba(74, 222, 128, 0.5)' },
+                            '50%': { transform: 'translateX(100%)', backgroundColor: 'rgba(248, 113, 113, 0.5)' },
+                            '100%': { transform: 'translateX(0%)', backgroundColor: 'rgba(248, 113, 113, 0.5)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Classes */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-strong {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* New Gradient: Skyblue to Green */
+        .text-gradient {
+            background: linear-gradient(to right, #38bdf8, #4ade80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Animated Background Blobs */
+        .blob-bg {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(180deg, rgba(56, 189, 248, 0.4) 0%, rgba(74, 222, 128, 0.4) 100%);
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .profile-photo {
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Custom Scanning Bar for Virus Detection */
+        #scan-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.8;
+            background-color: rgba(74, 222, 128, 0.5); /* Default start color */
+            animation: scan 3s infinite linear;
+            animation-play-state: paused;
+            transform: translateX(0%);
+        }
+        #scan-bar.scanning {
+            animation-play-state: running;
+        }
+
+        /* Fixed size for all demo canvases/visualizations */
+        .demo-visualization {
+            height: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Fix for fixed header blocking anchor links (80px is h-20) */
+        .scroll-target {
+            scroll-margin-top: 5rem; 
+        }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="blob-bg top-0 left-0 animate-blob"></div>
+        <div class="blob-bg bottom-0 right-0 animate-blob" style="animation-delay: 2s; background: linear-gradient(180deg, rgba(248, 113, 113, 0.4) 0%, rgba(56, 189, 248, 0.4) 100%);"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-strong">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-gradient-to-br from-brand-skyblue to-brand-success flex items-center justify-center">
+                        <i class="fas fa-shield-halved text-white text-sm"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl tracking-tight">CYBER<span class="text-brand-skyblue">SCOPE</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <!-- Links now correctly scroll with margin -->
+                    <a href="#team" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">The Analysts</a>
+                    <a href="#threats" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Cybercrime Offenses</a>
+                    <a href="#defense" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Defense Technologies</a>
+                    <a href="#demos" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-all text-sm font-medium">Live Demos</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass mb-8 border border-brand-skyblue/30">
+                <span class="w-2 h-2 rounded-full bg-brand-success animate-pulse"></span>
+                <span class="text-xs font-medium text-brand-skyblue tracking-wide">SECURED INTELLIGENCE</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 leading-tight">
+                Cybercrime <br>
+                <span class="text-gradient">Analysis and Defense</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12">
+                A comprehensive portfolio analyzing modern cybercrime vectors and the cutting-edge defense technologies designed to mitigate them.
+            </p>
+
+            <!-- TEAM SECTION (PROMINENTLY DISPLAYED) - scroll-target added -->
+            <div id="team" class="scroll-target max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+                
+                <!-- Hyacinth's Card -->
+                <div class="glass p-6 rounded-2xl flex items-center gap-4 hover:bg-white/10 transition-all duration-300 group text-left">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                        <!-- Hyacinth John Forones Photo -->
+                        <img 
+                            src="8e5d7d4a-c211-4c23-bb60-fa9359eea496.jpg" 
+                            onerror="this.src='https://placehold.co/64x64/333333/ffffff?text=F'"
+                            alt="Hyacinth John Forones Profile" 
+                            class="profile-photo w-full h-full"
+                        />
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-white group-hover:text-brand-skyblue transition-colors">Hyacinth John Forones</h3>
+                        <p class="text-sm text-gray-400">Lead Security Analyst</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="text-[10px] uppercase tracking-wider bg-brand-skyblue/20 text-brand-skyblue px-2 py-0.5 rounded">Network Security</span>
+                            <span class="text-[10px] uppercase tracking-wider bg-brand-skyblue/20 text-brand-skyblue px-2 py-0.5 rounded">Forensics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Melody's Card -->
+                <div class="glass p-6 rounded-2xl flex items-center gap-4 hover:bg-white/10 transition-all duration-300 group text-left">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-400 to-pink-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                        <!-- Melody Gulmatico's Photo -->
+                        <img 
+                            src="b4a3868a-e541-40c8-b781-64d57158b269.jpg" 
+                            onerror="this.src='https://placehold.co/64x64/333333/ffffff?text=G'"
+                            alt="Melody Gulmatico Profile" 
+                            class="profile-photo w-full h-full"
+                        />
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-white group-hover:text-brand-alert transition-colors">Melody Gulmatico</h3>
+                        <p class="text-sm text-gray-400">Cyber Intelligence Officer</p>
+                        <div class="flex gap-2 mt-2">
+                            <span class="text-[10px] uppercase tracking-wider bg-brand-alert/20 text-brand-alert px-2 py-0.5 rounded">Cryptography</span>
+                            <span class="text-[10px] uppercase tracking-wider bg-brand-alert/20 text-brand-alert px-2 py-0.5 rounded">Vulnerability Mgt.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Offenses Section (Content from Handout) - scroll-target added -->
+    <section id="threats" class="scroll-target py-20 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-end justify-between mb-12 border-b border-white/10 pb-4">
+                <div>
+                    <h2 class="text-3xl font-display font-bold">Cybercrime Offense Categories</h2>
+                    <p class="text-gray-400 mt-2">Categorization of critical digital threats and criminal activities.</p>
+                </div>
+                <div class="hidden md:block text-brand-alert text-2xl">
+                    <i class="fas fa-biohazard"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Threat Card 1: Cyber-Enabled Offenses (Alert Red Border) -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-alert">
+                    <div class="w-12 h-12 rounded-lg bg-brand-alert/20 flex items-center justify-center mb-6 text-brand-alert">
+                        <i class="fas fa-user-secret text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cyber-Enabled Offenses</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        These are offenses committed with or without technology but increased their reach using such technologies. [Image of phishing email and login form]
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-1">
+                        <li class="font-medium text-white">Identity Theft & Fraud:</li>
+                        <li class="ml-4">• Fraudulent impersonation to gain advantage or obtain property.</li>
+                        <li class="font-medium text-white">Phishing:</li>
+                        <li class="ml-4">• Luring users to fake websites to gather sensitive information (password, PIN, account number).</li>
+                    </ul>
+                </div>
+
+                <!-- Threat Card 2: Cyber-Dependent Offenses (Hacking) -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-alert/70">
+                    <div class="w-12 h-12 rounded-lg bg-brand-alert/20 flex items-center justify-center mb-6 text-brand-alert/90">
+                        <i class="fas fa-fingerprint text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cyber-Dependent Offenses: Hacking</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Offenses strictly committed using ICT, directly targeting network systems, data confidentiality, integrity, and availability. [Image of network intrusion detection system console]
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-1">
+                        <li class="ml-4">• Unauthorized access (logical or physical entry without credentials).</li>
+                        <li class="ml-4">• Modification/Impairment of data.</li>
+                        <li class="ml-4">• Interception of data (unauthorized alteration in transmission).</li>
+                        <li class="ml-4">• Misuse of assets.</li>
+                    </ul>
+                </div>
+
+                <!-- Threat Card 3: Cyber-Dependent Offenses (Malware) -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-alert/50">
+                    <div class="w-12 h-12 rounded-lg bg-brand-alert/20 flex items-center justify-center mb-6 text-brand-alert/70">
+                        <i class="fas fa-virus text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cyber-Dependent Offenses: Malware</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Software-based hacking tools intentionally malicious, targeting systems for destruction or data theft. 
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-1">
+                        <li class="ml-4">• Virus (self-replicates by changing programs).</li>
+                        <li class="ml-4">• Worm (standalone, replicates without human intervention).</li>
+                        <li class="ml-4">• Trojan (appears legitimate, but contains malicious payload).</li>
+                        <li class="ml-4">• Spyware (captures banking details, screenshots, etc.).</li>
+                    </ul>
+                </div>
+
+                 <!-- Threat Card 4: National Security Offenses (Cyberterrorism) -->
+                 <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-red-600">
+                    <div class="w-12 h-12 rounded-lg bg-red-600/20 flex items-center justify-center mb-6 text-red-600">
+                        <i class="fas fa-satellite-dish text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">National Security Offenses</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Cyberterrorism: unlawful offenses engaging in terrorist activities against critical infrastructure. [Image of cyber attack on power grid]
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-1">
+                        <li class="ml-4">• Incursion (sudden invasive attacks on infrastructure).</li>
+                        <li class="ml-4">• Destruction (destroying data to make it unreadable/inaccessible).</li>
+                        <li class="ml-4">• DDoS (Disrupting networks by making them inaccessible).</li>
+                        <li class="ml-4">• Defacement of Websites.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section (Content from Handout) - scroll-target added -->
+    <section id="defense" class="scroll-target py-20 px-6 bg-black/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-end justify-between mb-12 border-b border-white/10 pb-4">
+                <div>
+                    <h2 class="text-3xl font-display font-bold text-white">Cybersecurity Defense Technologies</h2>
+                    <p class="text-gray-400 mt-2">Key defense mechanisms for protecting systems and data integrity.</p>
+                </div>
+                <div class="hidden md:block text-brand-skyblue text-2xl">
+                    <i class="fas fa-shield-virus"></i>
+                </div>
+            </div>
+
+            <!-- Interactive Accordion Layout -->
+            <div class="space-y-4">
+                
+                <!-- Tech Item 1: Encryption -->
+                <div class="glass rounded-xl overflow-hidden group">
+                    <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech1')">
+                        <div class="flex items-center gap-4">
+                            <span class="text-brand-skyblue font-mono text-sm">01</span>
+                            <h3 class="text-xl font-bold">Encryption (Cryptography)</h3>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500 transition-transform group-hover:text-white" id="icon-tech1"></i>
+                    </div>
+                    <div id="tech1" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
+                        <div class="mt-4 grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                The technology of coding plaintext into unreadable ciphertext using encryption keys and algorithms. It protects against illegal and unauthorized access. [Image of asymmetric encryption process]
+                                <br><br>
+                                **Examples:** RSA, TDEA, Blowfish, Twofish.
+                            </p>
+                            <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-success">
+                                Plaintext + Key = Ciphertext<br>
+                                Ensures privacy and confidentiality during transmission and storage.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Item 2: Biometrics & Authentication -->
+                <div class="glass rounded-xl overflow-hidden group">
+                    <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech2')">
+                        <div class="flex items-center gap-4">
+                            <span class="text-brand-skyblue font-mono text-sm">02</span>
+                            <h3 class="text-xl font-bold">Biometrics and Authentication</h3>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500 transition-transform group-hover:text-white" id="icon-tech2"></i>
+                    </div>
+                    <div id="tech2" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
+                        <div class="mt-4 grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                **Authentication** validates the identity of an end user. **Biometrics** uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. [Image of biometric scanner]
+                                <br><br>
+                                **Examples:** Optical/Ultrasonic/Capacitive Scanners, Access Tokens, Security Keys.
+                            </p>
+                            <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-skyblue">
+                                Validation: User ID + Security Key/Trait<br>
+                                Traits (e.g., fingerprint) are harder to lose and duplicate than traditional passwords.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Item 3: Firewall -->
+                <div class="glass rounded-xl overflow-hidden group">
+                    <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech3')">
+                        <div class="flex items-center gap-4">
+                            <span class="text-brand-skyblue font-mono text-sm">03</span>
+                            <h3 class="text-xl font-bold">Firewall</h3>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500 transition-transform group-hover:text-white" id="icon-tech3"></i>
+                    </div>
+                    <div id="tech3" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
+                        <div class="mt-4 grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                The first line of defense, serving as a barrier between networks. It blocks specific inbound packet types and eliminates unauthorized data access based on defined IT policies. [Image of network firewall blocking traffic]
+                                <br><br>
+                                **Examples:** Network Address Translation (NAT), Packet-Filtering, VPNs.
+                            </p>
+                            <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-skyblue">
+                                > Inbound packet check: Policy defined...<br>
+                                > Protocol: HTTP (Port 80) -> BLOCKED<br>
+                                > Protocol: HTTPS (Port 443) -> ALLOWED
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Item 4: Virus Detection -->
+                <div class="glass rounded-xl overflow-hidden group">
+                    <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech4')">
+                        <div class="flex items-center gap-4">
+                            <span class="text-brand-skyblue font-mono text-sm">04</span>
+                            <h3 class="text-xl font-bold">Virus Detection (Anti-Malware)</h3>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500 transition-transform group-hover:text-white" id="icon-tech4"></i>
+                    </div>
+                    <div id="tech4" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
+                        <div class="mt-4 grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Software that prevents, detects, and removes malicious software. It scans new programs or files for matching virus signatures, flagging infected programs for blacklisting or isolation. 
+                                <br><br>
+                                **Examples:** On-Demand Scans, On-Access Scans, Boot-Time Scans.
+                            </p>
+                            <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-success">
+                                > Scanning new file: 'update.exe'...<br>
+                                > Signature Match: Win32/TrojanDownloader<br>
+                                > Action: ISOLATE & BLACKLIST
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                 <!-- Tech Item 5: Phishing Detection -->
+                 <div class="glass rounded-xl overflow-hidden group">
+                    <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech5')">
+                        <div class="flex items-center gap-4">
+                            <span class="text-brand-skyblue font-mono text-sm">05</span>
+                            <h3 class="text-xl font-bold">Phishing Detection</h3>
+                        </div>
+                        <i class="fas fa-chevron-down text-gray-500 transition-transform group-hover:text-white" id="icon-tech5"></i>
+                    </div>
+                    <div id="tech5" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
+                        <div class="mt-4 grid md:grid-cols-2 gap-8">
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Technologies used to identify and prevent evolving phishing attacks by checking visual similarity, blacklists, and performing web crawling to find faults in web indexes. [Image of phishing detection flow chart]
+                                <br><br>
+                                **Types:** Visual Similarity-Based, Blacklist-Based, Web Crawling-Based (WC-PAD).
+                            </p>
+                            <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-alert">
+                                > Checking URL against DNS Blacklist...<br>
+                                > Visual Similarity Score: 98% (High Risk)<br>
+                                > Action: SEND WARNING TO USER
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section Wrapper - scroll-target added -->
+    <section id="demos" class="scroll-target py-20 px-6 bg-brand-dark/50">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-display font-bold mb-8 text-center border-b border-white/10 pb-4">Live Demonstrations</h2>
+            
+            <!-- --- DEMO 1: FIREWALL --- -->
+            <div class="glass rounded-2xl p-4 md:p-8 mb-12">
+                <h3 class="font-display font-bold text-xl mb-4 text-brand-skyblue">1. Firewall (Network Traffic Filter)</h3>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4 flex-wrap pb-4 border-b border-white/10 mb-4">
+                    <button id="btn-firewall-attack" class="text-sm px-4 py-2 rounded bg-gray-700 hover:bg-brand-alert hover:text-white transition-colors">Simulate Attack</button>
+                    <button id="btn-firewall-toggle" class="text-sm px-4 py-2 rounded bg-gray-700 hover:bg-brand-skyblue hover:text-black transition-colors">Enable Firewall</button>
+                </div>
+                
+                <!-- Visualization/Output Area -->
+                <div class="relative bg-brand-dark rounded-xl overflow-hidden demo-visualization shadow-inner">
+                    <canvas id="firewallCanvas" class="w-full h-full block"></canvas>
+                    
+                    <!-- Firewall Stats Overlay -->
+                    <div class="absolute bottom-4 left-4 flex gap-4 text-[10px] font-mono" id="firewall-stats">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-brand-skyblue"></div>
+                            <span class="text-gray-400">SAFE: <span id="stat-safe" class="text-white">0</span></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-brand-alert"></div>
+                            <span class="text-gray-400">BLOCKED: <span id="stat-threat" class="text-white">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- --- DEMO 2: ENCRYPTION --- -->
+            <div class="glass rounded-2xl p-4 md:p-8 mb-12">
+                <h3 class="font-display font-bold text-xl mb-4 text-brand-success">2. Encryption (Data Protection)</h3>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4 flex-wrap pb-4 border-b border-white/10 mb-4">
+                    <button id="btn-encryption-encrypt" class="text-sm px-4 py-2 rounded bg-brand-success hover:bg-brand-success/80 text-black transition-colors font-semibold">Encrypt Data</button>
+                    <button id="btn-encryption-decrypt" class="text-sm px-4 py-2 rounded bg-gray-700 hover:bg-brand-alert hover:text-white transition-colors">Decrypt Data</button>
+                </div>
+                
+                <!-- Visualization/Output Area -->
+                <div class="relative bg-brand-dark rounded-xl overflow-hidden demo-visualization shadow-inner">
+                    <!-- Encryption Mode Output Text -->
+                    <div id="encryption-text-output" class="absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <p id="plain-text" class="text-lg text-brand-success font-display mb-2">PLAINTEXT: The confidential data is safe. Integrity Secured.</p>
+                        <div class="w-2/3 border-b border-white/10 mb-4"></div>
+                        <p id="cipher-text" class="text-xl text-gray-500 font-mono break-all leading-relaxed">CIPHERTEXT: 3H47K03L28xY9z0Q5W6o7P</p>
+                        <div id="decrypted-text" class="text-2xl text-brand-alert font-bold mt-4 hidden">DECRYPTED: The confidential data is safe. Integrity Secured.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- --- DEMO 3: VIRUS SCAN --- -->
+            <div class="glass rounded-2xl p-4 md:p-8">
+                <h3 class="font-display font-bold text-xl mb-4 text-brand-alert">3. Virus Detection (Signature Scan)</h3>
+                
+                <!-- Action Buttons -->
+                <div class="flex gap-4 flex-wrap pb-4 border-b border-white/10 mb-4">
+                    <button id="btn-virusscan-start" class="text-sm px-4 py-2 rounded bg-brand-success hover:bg-brand-success/80 text-black transition-colors font-semibold">Start Full System Scan</button>
+                    <button id="btn-virusscan-isolate" class="text-sm px-4 py-2 rounded bg-gray-700 hover:bg-brand-alert hover:text-white transition-colors">Isolate All Threats</button>
+                </div>
+                
+                <!-- Visualization/Output Area -->
+                <div class="relative bg-brand-dark rounded-xl overflow-hidden demo-visualization shadow-inner">
+                    <!-- Virus Scan Mode Output Text -->
+                    <div id="virusscan-output" class="absolute inset-0 p-4 sm:p-8 flex flex-col justify-start items-start overflow-y-auto">
+                        <!-- Scanning Bar Overlay (Absolute position within the canvas parent) -->
+                        <div id="scan-bar"></div>
+                        
+                        <h4 class="text-sm font-semibold text-brand-success mb-4 z-10">FILE SYSTEM SCAN LOG:</h4>
+                        <div id="file-log" class="text-xs font-mono w-full space-y-2 z-10">
+                            <p class="text-gray-500">[Click "Start Full System Scan" to begin analysis]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-12 text-center text-gray-500 text-sm">
+        <p class="font-display font-bold text-white mb-2">CYBER<span class="text-brand-skyblue">SCOPE</span></p>
+        <p>A Cyber Defense and Intelligence Portfolio.</p>
+        <p>&copy; 2025 Forones & Gulmatico.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- CONSTANTS ---
+        const SKYBLUE = '#38bdf8'; 
+        const ALERT_RED = '#f87171';
+        const SUCCESS_GREEN = '#4ade80';
+        const WARNING_YELLOW = '#fbbf24';
+        
+        // --- DEMO 1: FIREWALL GLOBALS ---
+        const firewallCanvas = document.getElementById('firewallCanvas');
+        const firewallCtx = firewallCanvas.getContext('2d');
+        const btnFirewallAttack = document.getElementById('btn-firewall-attack');
+        const btnFirewallToggle = document.getElementById('btn-firewall-toggle');
+        const statSafe = document.getElementById('stat-safe');
+        const statThreat = document.getElementById('stat-threat');
+        
+        let firewallWidth, firewallHeight;
+        let particles = [];
+        let isAttack = false;
+        let isFirewallEnabled = false;
+        let safeCount = 0;
+        let threatCount = 0;
+
+        // --- DEMO 2: ENCRYPTION GLOBALS ---
+        const btnEncryptionEncrypt = document.getElementById('btn-encryption-encrypt');
+        const btnEncryptionDecrypt = document.getElementById('btn-encryption-decrypt');
+        const plainTextEl = document.getElementById('plain-text');
+        const cipherTextEl = document.getElementById('cipher-text');
+        const decryptedTextEl = document.getElementById('decrypted-text');
+        
+        let isEncrypted = true;
+        const PLAIN_MESSAGE = "The confidential data is safe. Integrity Secured.";
+        const CIPHER_MESSAGE = "3H47K03L28xY9z0Q5W6o7P_a0sD1fG2hJ3kL4zX5c6vB7n";
+
+        // --- DEMO 3: VIRUS SCAN GLOBALS ---
+        const btnVirusScanStart = document.getElementById('btn-virusscan-start');
+        const btnVirusScanIsolate = document.getElementById('btn-virusscan-isolate');
+        const virusScanOutput = document.getElementById('virusscan-output');
+        const fileLog = document.getElementById('file-log');
+        const scanBar = document.getElementById('scan-bar');
+        
+        let isScanning = false;
+        let scanInterval;
+        let fileIndex = 0;
+        const FILE_SIGNATURES = [
+            { name: 'document.pdf', signature: 'A5B7F3E2', isMalicious: false },
+            { name: 'setup.exe', signature: '4D1C90B8', isMalicious: true, threat: 'Trojan.Downloader' },
+            { name: 'image_01.jpg', signature: 'C9E0A1D6', isMalicious: false },
+            { name: 'secret_tool.zip', signature: 'F2A6B4C8', isMalicious: true, threat: 'Win32.Spyware' },
+            { name: 'report_v2.docx', signature: 'B8C9D0E1', isMalicious: false },
+            { name: 'temp_install.tmp', signature: '8E4A7D9B', isMalicious: true, threat: 'Ransomware.Locky' },
+            { name: 'update_patch.dll', signature: '5F0E3C2B', isMalicious: true, threat: 'Worm.Conficker' },
+            { name: 'config.sys', signature: '1A3B5C7D', isMalicious: false },
+        ];
+        
+        // --- UTILITY FUNCTIONS ---
+        function toggleTech(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            const isVisible = content.classList.contains('hidden');
+
+            // Close all first (optional, but good for clean UI)
+            document.querySelectorAll('.glass > div:last-child').forEach(div => {
+                div.classList.add('hidden');
+                div.previousElementSibling.querySelector('i').classList.remove('rotate-180');
+            });
+
+            // Open the clicked one
+            if (isVisible) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            }
+        }
+
+
+        // --- DEMO 1: FIREWALL LOGIC ---
+
+        function resizeFirewall() {
+            firewallWidth = firewallCanvas.parentElement.offsetWidth;
+            firewallHeight = firewallCanvas.parentElement.offsetHeight;
+            firewallCanvas.width = firewallWidth;
+            firewallCanvas.height = firewallHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * firewallWidth; 
+                this.y = firewallHeight + 10;
+                this.speed = Math.random() * 2 + 1;
+                this.size = Math.random() * 2 + 1;
+                this.isThreat = isAttack ? Math.random() > 0.3 : Math.random() > 0.95; 
+                this.color = this.isThreat ? ALERT_RED : SKYBLUE;
+                this.blocked = false;
+            }
+
+            update() {
+                this.y -= this.speed;
+
+                // Check for blocking action
+                if (isFirewallEnabled && this.y < firewallHeight * 0.3) {
+                    if (this.isThreat && !this.blocked) {
+                        this.blocked = true;
+                        threatCount++;
+                    }
+                }
+
+                // Recycle particle if it passes the top or is blocked and drops below the line
+                if (this.y < -10 || (this.blocked && this.y < firewallHeight * 0.3)) {
+                    if (!this.blocked && !this.isThreat) safeCount++;
+                    this.reset();
+                }
+            }
+
+            draw() {
+                // If blocked, draw it hovering near the line
+                if (this.blocked && this.y < firewallHeight * 0.3) {
+                    firewallCtx.globalAlpha = 0.6;
+                    firewallCtx.fillStyle = this.color;
+                    firewallCtx.beginPath();
+                    firewallCtx.arc(this.x, firewallHeight * 0.3 + (Math.sin(Date.now() / 200) * 2), this.size * 2, 0, Math.PI * 2);
+                    firewallCtx.fill();
+                    firewallCtx.globalAlpha = 1;
+                } else if (!this.blocked) {
+                    // Regular packets move down
+                    firewallCtx.globalAlpha = 0.6;
+                    firewallCtx.fillStyle = this.color;
+                    firewallCtx.beginPath();
+                    firewallCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    firewallCtx.fill();
+                    firewallCtx.globalAlpha = 1;
+                }
+            }
+        }
+
+        // Initialize particles
+        function initFirewallParticles() {
+            particles = [];
+            for(let i = 0; i < 50; i++) particles.push(new Particle());
+        }
+
+        function drawFirewallMode() {
+            firewallCtx.clearRect(0, 0, firewallWidth, firewallHeight);
+            
+            if (isFirewallEnabled) {
+                // Draw Firewall Line
+                firewallCtx.strokeStyle = `rgba(56, 189, 248, 0.7)`;
+                firewallCtx.lineWidth = 2;
+                firewallCtx.setLineDash([5, 5]); 
+                firewallCtx.beginPath();
+                firewallCtx.moveTo(0, firewallHeight * 0.3);
+                firewallCtx.lineTo(firewallWidth, firewallHeight * 0.3);
+                firewallCtx.stroke();
+                firewallCtx.setLineDash([]);
+
+                // Draw Text
+                firewallCtx.fillStyle = SKYBLUE;
+                firewallCtx.font = '10px Inter';
+                firewallCtx.textAlign = 'center';
+                firewallCtx.fillText('FIREWALL / THREAT MITIGATION LINE', firewallWidth / 2, firewallHeight * 0.3 - 10);
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Update stats
+            statSafe.innerText = safeCount;
+            statThreat.innerText = threatCount;
+        }
+        
+        function updateFirewallButtons() {
+            btnFirewallAttack.textContent = isAttack ? "Stop Attack (Active)" : "Simulate Attack";
+            btnFirewallAttack.classList.toggle('bg-brand-alert', isAttack);
+            btnFirewallAttack.classList.toggle('bg-gray-700', !isAttack);
+            btnFirewallAttack.classList.toggle('hover:bg-brand-alert/80', isAttack);
+            btnFirewallAttack.classList.toggle('hover:bg-brand-alert', !isAttack);
+
+            btnFirewallToggle.textContent = isFirewallEnabled ? "Disable Firewall" : "Enable Firewall";
+            btnFirewallToggle.classList.toggle('bg-brand-skyblue', isFirewallEnabled);
+            btnFirewallToggle.classList.toggle('bg-gray-700', !isFirewallEnabled);
+            btnFirewallToggle.classList.toggle('text-black', isFirewallEnabled);
+        }
+
+        function toggleAttack() {
+            isAttack = !isAttack;
+            safeCount = 0;
+            threatCount = 0;
+            initFirewallParticles(); // Reset particles with new threat level
+            updateFirewallButtons();
+        }
+
+        function toggleFirewall() {
+            isFirewallEnabled = !isFirewallEnabled;
+            updateFirewallButtons();
+        }
+
+        // --- DEMO 2: ENCRYPTION LOGIC ---
+
+        function updateEncryptionView() {
+            if (isEncrypted) {
+                plainTextEl.innerHTML = 'PLAINTEXT: <span class="text-gray-500">[Hidden by Encryption]</span>';
+                cipherTextEl.textContent = `CIPHERTEXT: ${CIPHER_MESSAGE}`;
+                decryptedTextEl.style.display = 'none';
+            } else {
+                plainTextEl.innerHTML = `PLAINTEXT: <span class="text-brand-success font-semibold">${PLAIN_MESSAGE}</span>`;
+                cipherTextEl.textContent = `CIPHERTEXT: [Decrypted and verified]`;
+                decryptedTextEl.textContent = `DECRYPTED: ${PLAIN_MESSAGE}`;
+                decryptedTextEl.style.display = 'block';
+            }
+            updateEncryptionButtons();
+        }
+
+        function updateEncryptionButtons() {
+             btnEncryptionEncrypt.textContent = isEncrypted ? "Encrypt Data (Active)" : "Encrypt Data";
+             btnEncryptionEncrypt.classList.toggle('bg-brand-success', isEncrypted);
+             btnEncryptionEncrypt.classList.toggle('bg-gray-700', !isEncrypted);
+             btnEncryptionEncrypt.classList.toggle('text-black', isEncrypted);
+             btnEncryptionEncrypt.classList.toggle('text-white', !isEncrypted);
+
+             btnEncryptionDecrypt.textContent = isEncrypted ? "Decrypt Data" : "Data Decrypted (Verified)";
+             btnEncryptionDecrypt.classList.toggle('bg-brand-alert', !isEncrypted);
+             btnEncryptionDecrypt.classList.toggle('bg-gray-700', isEncrypted);
+             btnEncryptionDecrypt.classList.toggle('hover:bg-brand-alert', isEncrypted);
+             btnEncryptionDecrypt.classList.toggle('text-white', true);
+        }
+
+        function encryptData() {
+            isEncrypted = true;
+            updateEncryptionView();
+        }
+
+        function decryptData() {
+            isEncrypted = false;
+            updateEncryptionView();
+        }
+        
+        // --- DEMO 3: VIRUS SCAN LOGIC ---
+        
+        function logFileResult(file, status) {
+            let color, icon, message;
+
+            if (status === 'INFECTED') {
+                color = ALERT_RED;
+                icon = '<i class="fas fa-exclamation-triangle"></i>';
+                message = `<span class="text-brand-alert font-bold">INFECTED</span>: ${file.threat} - Signature: ${file.signature}`;
+            } else if (status === 'CLEAN') {
+                color = SUCCESS_GREEN;
+                icon = '<i class="fas fa-check-circle"></i>';
+                message = `<span class="text-brand-success font-bold">CLEAN</span>: Signature: ${file.signature}`;
+            } else { // Scanning / Unknown
+                color = WARNING_YELLOW;
+                icon = '<i class="fas fa-spinner fa-spin"></i>';
+                message = `<span class="text-brand-warning font-bold">SCANNING...</span> Signature: ${file.signature}`;
+            }
+
+            const newLogEntry = document.createElement('div');
+            newLogEntry.className = 'file-log-entry flex items-center gap-3 p-2 rounded';
+            newLogEntry.innerHTML = `
+                <span style="color: ${color};">${icon}</span>
+                <span class="text-gray-400 w-32 truncate">${file.name}</span>
+                <span class="flex-grow">${message}</span>
+                <span class="status-action" data-filename="${file.name}"></span>
+            `;
+            fileLog.prepend(newLogEntry); // Prepend to show newest at top
+            virusScanOutput.scrollTop = 0; // Scroll to top
+            return newLogEntry;
+        }
+
+        function updateVirusScanButtons() {
+             btnVirusScanStart.textContent = isScanning ? "Stop Scan (Active)" : "Start Full System Scan";
+             btnVirusScanStart.classList.toggle('bg-brand-alert', isScanning);
+             btnVirusScanStart.classList.toggle('bg-brand-success', !isScanning);
+             btnVirusScanStart.classList.toggle('text-white', isScanning);
+             btnVirusScanStart.classList.toggle('text-black', !isScanning);
+        }
+
+        function toggleScan() {
+            if (isScanning) {
+                clearInterval(scanInterval);
+                isScanning = false;
+                scanBar.classList.remove('scanning');
+                updateVirusScanButtons();
+            } else {
+                fileLog.innerHTML = ''; // Clear previous log
+                fileIndex = 0;
+                isScanning = true;
+                scanBar.classList.add('scanning');
+                updateVirusScanButtons();
+                startScanProcess();
+            }
+        }
+
+        function logComplete() {
+             const completeMessage = document.createElement('div');
+             completeMessage.className = 'text-center p-4 mt-4 bg-brand-skyblue/10 rounded-lg text-brand-skyblue font-bold text-sm z-10';
+             completeMessage.textContent = 'SCAN COMPLETE: All files checked against current signature database.';
+             fileLog.prepend(completeMessage);
+        }
+
+        // Global function called from the log button (needs to be available globally in vanilla JS)
+        window.isolateFile = (button) => {
+             const fileName = button.getAttribute('data-filename');
+             const fileToIsolate = FILE_SIGNATURES.find(f => f.name === fileName);
+             if (fileToIsolate) {
+                 button.textContent = 'ISOLATED';
+                 button.disabled = true;
+                 button.classList.remove('hover:bg-brand-alert', 'bg-brand-alert/20');
+                 button.classList.add('bg-brand-alert/50', 'text-gray-400', 'cursor-not-allowed');
+             }
+        };
+
+        function startScanProcess() {
+            const filesToScan = [...FILE_SIGNATURES].sort(() => 0.5 - Math.random()); // Randomize order
+
+            scanInterval = setInterval(() => {
+                if (fileIndex >= filesToScan.length) {
+                    toggleScan(); // Stop scan and update UI
+                    logComplete();
+                    return;
+                }
+
+                const file = filesToScan[fileIndex];
+                
+                // Simulate scan result delay
+                setTimeout(() => {
+                    const result = file.isMalicious ? 'INFECTED' : 'CLEAN';
+                    const logEntry = logFileResult(file, result);
+
+                    if (file.isMalicious) {
+                         const actionSpan = logEntry.querySelector('.status-action');
+                         actionSpan.innerHTML = `<button class="isolate-btn text-xs px-2 py-1 rounded bg-brand-alert/20 text-brand-alert hover:bg-brand-alert hover:text-white transition-colors ml-auto" data-filename="${file.name}" onclick="window.isolateFile(this)">ISOLATE</button>`;
+                    }
+                }, 50); 
+
+                fileIndex++;
+
+            }, 500); // Scan a new file every 500ms
+        }
+        
+        function isolateThreats() {
+            // Find all infected files that are not yet isolated
+            const infectedButtons = virusScanOutput.querySelectorAll('.isolate-btn:not([disabled])');
+            
+            infectedButtons.forEach(button => {
+                window.isolateFile(button);
+            });
+
+            if (infectedButtons.length > 0) {
+                 const finalMessage = document.createElement('div');
+                 finalMessage.className = 'text-center p-4 mt-4 bg-brand-skyblue/10 rounded-lg text-brand-skyblue font-bold text-sm z-10';
+                 finalMessage.textContent = `ACTION: ${infectedButtons.length} threats successfully isolated!`;
+                 fileLog.prepend(finalMessage);
+                 virusScanOutput.scrollTop = 0;
+            } else {
+                 const finalMessage = document.createElement('div');
+                 finalMessage.className = 'text-center p-4 mt-4 bg-brand-warning/10 rounded-lg text-brand-warning font-bold text-sm z-10';
+                 finalMessage.textContent = `ALERT: No un-isolated threats found. Run a scan first or all threats are isolated.`;
+                 fileLog.prepend(finalMessage);
+                 virusScanOutput.scrollTop = 0;
+            }
+        }
+
+        // --- GLOBAL SETUP & ANIMATION ---
+
+        function animate() {
+            drawFirewallMode(); // Only need to animate Firewall, others are UI/Text based
+            requestAnimationFrame(animate);
+        }
+        
+        // --- EVENT LISTENERS ---
+        
+        // Window Listeners
+        window.addEventListener('resize', resizeFirewall);
+        
+        // Firewall Actions
+        btnFirewallAttack.addEventListener('click', toggleAttack);
+        btnFirewallToggle.addEventListener('click', toggleFirewall);
+
+        // Encryption Actions
+        btnEncryptionEncrypt.addEventListener('click', encryptData);
+        btnEncryptionDecrypt.addEventListener('click', decryptData);
+
+        // Virus Scan Actions
+        btnVirusScanStart.addEventListener('click', toggleScan);
+        btnVirusScanIsolate.addEventListener('click', isolateThreats);
+
+        
+        // Initialize the UI and start the animation loop
+        window.onload = function() {
+            resizeFirewall();
+            initFirewallParticles();
+            updateFirewallButtons();
+            updateEncryptionView(); // Initializes encryption UI
+            updateVirusScanButtons(); // Initializes virus scan UI
+            animate();
+        };
+
+    </script>
+</body>
+</html>
