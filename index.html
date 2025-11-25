@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Defense and Intelligence Portfolio | Forones & Gulmatico</title>
+    <title>Cybersecurity Portfolio: Forones & Gulmatico</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght{font-weight-list}:300;400;600&display=swap" rel="stylesheet">
@@ -147,6 +147,8 @@
                     </div>
                     <span class="font-display font-bold text-xl tracking-tight">CYBER<span class="text-brand-skyblue">SCOPE</span></span>
                 </div>
+                
+                <!-- Desktop Links -->
                 <div class="hidden md:flex items-center space-x-8">
                     <!-- Links now correctly scroll with margin -->
                     <a href="#team" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">The Analysts</a>
@@ -154,9 +156,25 @@
                     <a href="#defense" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Defense Technologies</a>
                     <a href="#demos" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-all text-sm font-medium">Live Demos</a>
                 </div>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <button id="menu-button" class="md:hidden p-2 rounded-full hover:bg-white/10 transition-colors z-50">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
     </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-lg hidden pt-24 px-6">
+        <div class="flex flex-col space-y-6">
+            <a href="#team" class="text-2xl font-display text-gray-300 hover:text-white transition-colors border-b border-white/10 pb-3">The Analysts</a>
+            <a href="#threats" class="text-2xl font-display text-gray-300 hover:text-white transition-colors border-b border-white/10 pb-3">Cybercrime Offenses</a>
+            <a href="#defense" class="text-2xl font-display text-gray-300 hover:text-white transition-colors border-b border-white/10 pb-3">Defense Technologies</a>
+            <a href="#demos" class="mt-4 px-4 py-3 rounded-xl bg-brand-skyblue text-brand-dark transition-all text-xl font-bold text-center">Live Demos</a>
+        </div>
+    </div>
+
 
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6">
@@ -596,6 +614,29 @@
             { name: 'config.sys', signature: '1A3B5C7D', isMalicious: false },
         ];
         
+        // --- MOBILE MENU LOGIC ---
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        function toggleMobileMenu() {
+            // isMenuClosed is true if the 'hidden' class was added (menu is now closed)
+            const isMenuClosed = mobileMenu.classList.toggle('hidden'); 
+            
+            // Change button icon: if closed, show bars; if open, show times
+            menuButton.querySelector('i').className = isMenuClosed ? 'fas fa-bars text-xl' : 'fas fa-times text-xl';
+            
+            // Prevent body scrolling when menu is open (i.e., when it is NOT hidden)
+            document.body.classList.toggle('overflow-hidden', !isMenuClosed);
+        }
+
+        function closeMobileMenu() {
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                menuButton.querySelector('i').className = 'fas fa-bars text-xl';
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
+
         // --- UTILITY FUNCTIONS ---
         function toggleTech(id) {
             const content = document.getElementById(id);
@@ -931,6 +972,14 @@
         // Virus Scan Actions
         btnVirusScanStart.addEventListener('click', toggleScan);
         btnVirusScanIsolate.addEventListener('click', isolateThreats);
+
+        // Mobile Menu Listener
+        menuButton.addEventListener('click', toggleMobileMenu);
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
 
         
         // Initialize the UI and start the animation loop
