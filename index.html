@@ -132,6 +132,7 @@
 <body class="antialiased relative">
 
     <!-- Background Elements -->
+    <!-- The pointer-events: none ensures this background layer does not capture mouse clicks -->
     <div class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
         <div class="blob-bg top-0 left-0 animate-blob"></div>
         <div class="blob-bg bottom-0 right-0 animate-blob" style="animation-delay: 2s; background: linear-gradient(180deg, rgba(248, 113, 113, 0.4) 0%, rgba(56, 189, 248, 0.4) 100%);"></div>
@@ -243,7 +244,7 @@
     </section>
 
     <!-- Offenses Section (Content from Handout) - scroll-target added -->
-    <section id="threats" class="scroll-target py-20 px-6 relative z-10">
+    <section id="threats" class="scroll-target py-20 px-6 relative z-10"> 
         <div class="max-w-7xl mx-auto">
             <div class="flex items-end justify-between mb-12 border-b border-white/10 pb-4">
                 <div>
@@ -328,7 +329,7 @@
     </section>
 
     <!-- Technologies Section (Content from Handout) - scroll-target added -->
-    <section id="defense" class="scroll-target py-20 px-6 bg-black/20">
+    <section id="defense" class="scroll-target py-20 px-6 bg-black/20 relative z-10"> 
         <div class="max-w-7xl mx-auto">
             <div class="flex items-end justify-between mb-12 border-b border-white/10 pb-4">
                 <div>
@@ -344,7 +345,7 @@
             <div class="space-y-4">
                 
                 <!-- Tech Item 1: Encryption -->
-                <div class="glass rounded-xl overflow-hidden group">
+                <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech1')">
                         <div class="flex items-center gap-4">
                             <span class="text-brand-skyblue font-mono text-sm">01</span>
@@ -357,7 +358,7 @@
                             <p class="text-gray-400 text-sm leading-relaxed">
                                 The technology of coding plaintext into unreadable ciphertext using encryption keys and algorithms. It protects against illegal and unauthorized access. [Image of asymmetric encryption process]
                                 <br><br>
-                                **Examples:** RSA, TDEA, Blowfish, Twofish.
+                                Examples: RSA, TDEA, Blowfish, Twofish.
                             </p>
                             <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-success">
                                 Plaintext + Key = Ciphertext<br>
@@ -368,7 +369,7 @@
                 </div>
 
                 <!-- Tech Item 2: Biometrics & Authentication -->
-                <div class="glass rounded-xl overflow-hidden group">
+                <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech2')">
                         <div class="flex items-center gap-4">
                             <span class="text-brand-skyblue font-mono text-sm">02</span>
@@ -379,9 +380,9 @@
                     <div id="tech2" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                **Authentication** validates the identity of an end user. **Biometrics** uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. [Image of biometric scanner]
+                                Authentication validates the identity of an end user. **Biometrics** uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. [Image of biometric scanner]
                                 <br><br>
-                                **Examples:** Optical/Ultrasonic/Capacitive Scanners, Access Tokens, Security Keys.
+                                Examples: Optical/Ultrasonic/Capacitive Scanners, Access Tokens, Security Keys.
                             </p>
                             <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-skyblue">
                                 Validation: User ID + Security Key/Trait<br>
@@ -392,7 +393,8 @@
                 </div>
 
                 <!-- Tech Item 3: Firewall -->
-                <div class="glass rounded-xl overflow-hidden group">
+                <!-- ADDING relative z-20 HERE -->
+                <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech3')">
                         <div class="flex items-center gap-4">
                             <span class="text-brand-skyblue font-mono text-sm">03</span>
@@ -405,7 +407,7 @@
                             <p class="text-gray-400 text-sm leading-relaxed">
                                 The first line of defense, serving as a barrier between networks. It blocks specific inbound packet types and eliminates unauthorized data access based on defined IT policies. [Image of network firewall blocking traffic]
                                 <br><br>
-                                **Examples:** Network Address Translation (NAT), Packet-Filtering, VPNs.
+                                Examples: Network Address Translation (NAT), Packet-Filtering, VPNs.
                             </p>
                             <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-skyblue">
                                 > Inbound packet check: Policy defined...<br>
@@ -417,7 +419,8 @@
                 </div>
 
                 <!-- Tech Item 4: Virus Detection -->
-                <div class="glass rounded-xl overflow-hidden group">
+                <!-- ADDING relative z-20 HERE -->
+                <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech4')">
                         <div class="flex items-center gap-4">
                             <span class="text-brand-skyblue font-mono text-sm">04</span>
@@ -430,7 +433,7 @@
                             <p class="text-gray-400 text-sm leading-relaxed">
                                 Software that prevents, detects, and removes malicious software. It scans new programs or files for matching virus signatures, flagging infected programs for blacklisting or isolation. 
                                 <br><br>
-                                **Examples:** On-Demand Scans, On-Access Scans, Boot-Time Scans.
+                                Examples: On-Demand Scans, On-Access Scans, Boot-Time Scans.
                             </p>
                             <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-success">
                                 > Scanning new file: 'update.exe'...<br>
@@ -442,7 +445,8 @@
                 </div>
                 
                  <!-- Tech Item 5: Phishing Detection -->
-                 <div class="glass rounded-xl overflow-hidden group">
+                 <!-- ADDING relative z-20 HERE -->
+                 <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech5')">
                         <div class="flex items-center gap-4">
                             <span class="text-brand-skyblue font-mono text-sm">05</span>
@@ -455,7 +459,7 @@
                             <p class="text-gray-400 text-sm leading-relaxed">
                                 Technologies used to identify and prevent evolving phishing attacks by checking visual similarity, blacklists, and performing web crawling to find faults in web indexes. [Image of phishing detection flow chart]
                                 <br><br>
-                                **Types:** Visual Similarity-Based, Blacklist-Based, Web Crawling-Based (WC-PAD).
+                                Types: Visual Similarity-Based, Blacklist-Based, Web Crawling-Based (WC-PAD).
                             </p>
                             <div class="bg-black/40 rounded p-4 font-mono text-xs text-brand-alert">
                                 > Checking URL against DNS Blacklist...<br>
@@ -471,12 +475,13 @@
     </section>
 
     <!-- Live Demo Section Wrapper - scroll-target added -->
-    <section id="demos" class="scroll-target py-20 px-6 bg-brand-dark/50">
+    <section id="demos" class="scroll-target py-20 px-6 bg-brand-dark/50 relative z-10">
         <div class="max-w-5xl mx-auto">
             <h2 class="text-3xl font-display font-bold mb-8 text-center border-b border-white/10 pb-4">Live Demonstrations</h2>
             
             <!-- --- DEMO 1: FIREWALL --- -->
-            <div class="glass rounded-2xl p-4 md:p-8 mb-12">
+            <!-- ADDING relative z-20 HERE -->
+            <div class="glass rounded-2xl p-4 md:p-8 mb-12 relative z-20">
                 <h3 class="font-display font-bold text-xl mb-4 text-brand-skyblue">1. Firewall (Network Traffic Filter)</h3>
                 
                 <!-- Action Buttons -->
@@ -504,7 +509,8 @@
             </div>
 
             <!-- --- DEMO 2: ENCRYPTION --- -->
-            <div class="glass rounded-2xl p-4 md:p-8 mb-12">
+            <!-- ADDING relative z-20 HERE -->
+            <div class="glass rounded-2xl p-4 md:p-8 mb-12 relative z-20">
                 <h3 class="font-display font-bold text-xl mb-4 text-brand-success">2. Encryption (Data Protection)</h3>
                 
                 <!-- Action Buttons -->
@@ -526,7 +532,8 @@
             </div>
 
             <!-- --- DEMO 3: VIRUS SCAN --- -->
-            <div class="glass rounded-2xl p-4 md:p-8">
+            <!-- ADDING relative z-20 HERE -->
+            <div class="glass rounded-2xl p-4 md:p-8 relative z-20">
                 <h3 class="font-display font-bold text-xl mb-4 text-brand-alert">3. Virus Detection (Signature Scan)</h3>
                 
                 <!-- Action Buttons -->
@@ -596,7 +603,7 @@
         const CIPHER_MESSAGE = "F0C8B1E9A3D4G5H6J7K2"; 
         
         // Initialize the HTML content to reflect the new message
-        plainTextEl.innerHTML = `PLAINTEXT: ${PLAIN_MESSAGE}`;
+        plainTextEl.innerHTML = `PLAINTEXT: <span class="text-gray-500">[Hidden by Encryption]</span>`;
         cipherTextEl.textContent = `CIPHERTEXT: ${CIPHER_MESSAGE}`;
 
 
@@ -651,9 +658,13 @@
             const isVisible = content.classList.contains('hidden');
 
             // Close all first (optional, but good for clean UI)
-            document.querySelectorAll('.glass > div:last-child').forEach(div => {
+            document.querySelectorAll('#defense .glass > div:last-child').forEach(div => {
                 div.classList.add('hidden');
-                div.previousElementSibling.querySelector('i').classList.remove('rotate-180');
+                // Find the icon element within the same parent structure
+                const iconToRotate = div.previousElementSibling.querySelector('i');
+                if (iconToRotate) {
+                    iconToRotate.classList.remove('rotate-180');
+                }
             });
 
             // Open the clicked one
