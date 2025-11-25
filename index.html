@@ -517,10 +517,10 @@
                 <div class="relative bg-brand-dark rounded-xl overflow-hidden demo-visualization shadow-inner">
                     <!-- Encryption Mode Output Text -->
                     <div id="encryption-text-output" class="absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
-                        <p id="plain-text" class="text-lg text-brand-success font-display mb-2">PLAINTEXT: Zamboanga City</p>
+                        <p id="plain-text" class="text-lg text-brand-success font-display mb-2">PLAINTEXT: The confidential data is safe. Integrity Secured.</p>
                         <div class="w-2/3 border-b border-white/10 mb-4"></div>
-                        <p id="cipher-text" class="text-xl text-gray-500 font-mono break-all leading-relaxed">CIPHERTEXT: 3H47K03L28xY9z0Q5W6o7P</p>
-                        <div id="decrypted-text" class="text-2xl text-brand-alert font-bold mt-4 hidden">DECRYPTED: Zamboanga City</div>
+                        <p id="cipher-text" class="text-xl text-gray-500 font-mono break-all leading-relaxed">CIPHERTEXT: F0C8B1E9A3D4G5H6J7K2</p>
+                        <div id="decrypted-text" class="text-2xl text-brand-alert font-bold mt-4 hidden">DECRYPTED: The confidential data is safe. Integrity Secured.</div>
                     </div>
                 </div>
             </div>
@@ -590,8 +590,15 @@
         const decryptedTextEl = document.getElementById('decrypted-text');
         
         let isEncrypted = true;
-        const PLAIN_MESSAGE = "The confidential data is safe. Integrity Secured.";
-        const CIPHER_MESSAGE = "3H47K03L28xY9z0Q5W6o7P_a0sD1fG2hJ3kL4zX5c6vB7n";
+        // UPDATED: Changed message to just Zamboanga City
+        const PLAIN_MESSAGE = "Zamboanga City";
+        // UPDATED: Adjusted cipher text for shorter message
+        const CIPHER_MESSAGE = "F0C8B1E9A3D4G5H6J7K2"; 
+        
+        // Initialize the HTML content to reflect the new message
+        plainTextEl.innerHTML = `PLAINTEXT: ${PLAIN_MESSAGE}`;
+        cipherTextEl.textContent = `CIPHERTEXT: ${CIPHER_MESSAGE}`;
+
 
         // --- DEMO 3: VIRUS SCAN GLOBALS ---
         const btnVirusScanStart = document.getElementById('btn-virusscan-start');
@@ -638,7 +645,7 @@
         }
 
         // --- UTILITY FUNCTIONS ---
-        function toggleTech(id) {
+        window.toggleTech = (id) => {
             const content = document.getElementById(id);
             const icon = document.getElementById(`icon-${id}`);
             const isVisible = content.classList.contains('hidden');
@@ -995,4 +1002,3 @@
     </script>
 </body>
 </html>
-
