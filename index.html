@@ -256,7 +256,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <!-- Changed grid layout to 2x2 for desktop to accommodate the new card gracefully -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
                 <!-- Threat Card 1: Cyber-Enabled Offenses (Alert Red Border) -->
                 <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-alert">
                     <div class="w-12 h-12 rounded-lg bg-brand-alert/20 flex items-center justify-center mb-6 text-brand-alert">
@@ -264,13 +265,30 @@
                     </div>
                     <h3 class="text-xl font-bold mb-3">Cyber-Enabled Offenses</h3>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        These are offenses committed with or without technology but increased their reach using such technologies. [Image of phishing email and login form]
+                        Offenses committed with or without technology, but where technology is used as an instrument to increase their reach (technology-as-instrument offenses).
                     </p>
                     <ul class="text-xs text-gray-400 space-y-1">
                         <li class="font-medium text-white">Identity Theft & Fraud:</li>
-                        <li class="ml-4">• Fraudulent impersonation to gain advantage or obtain property.</li>
+                        <li class="ml-4">• Fraudulent impersonation to gain advantage.</li>
                         <li class="font-medium text-white">Phishing:</li>
-                        <li class="ml-4">• Luring users to fake websites to gather sensitive information (password, PIN, account number).</li>
+                        <li class="ml-4">• Luring users to fake websites to gather sensitive information.</li>
+                    </ul>
+                </div>
+                
+                <!-- UPDATED CARD: Computer/Cyber-Supported Offenses (Content Toned Down) -->
+                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-warning">
+                    <div class="w-12 h-12 rounded-lg bg-brand-warning/20 flex items-center justify-center mb-6 text-brand-warning">
+                        <i class="fas fa-database text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cyber-Supported Offenses</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Traditional crimes where a computer or device is primarily used as a storage medium or source of evidence (e.g., planning, documentation, or storage of evidence).
+                    </p>
+                    <ul class="text-xs text-gray-400 space-y-1">
+                        <li class="font-medium text-white">Storage of Prohibited Content:</li>
+                        <li class="ml-4">• Storing highly sensitive materials against policy or law.</li>
+                        <li class="font-medium text-white">Documentation of Financial Crimes:</li>
+                        <li class="ml-4">• Storing fraudulent financial records or corporate ledgers.</li>
                     </ul>
                 </div>
 
@@ -279,35 +297,19 @@
                     <div class="w-12 h-12 rounded-lg bg-brand-alert/20 flex items-center justify-center mb-6 text-brand-alert/90">
                         <i class="fas fa-fingerprint text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Cyber-Dependent Offenses: Hacking</h3>
+                    <h3 class="text-xl font-bold mb-3">Cyber-Dependent Offenses</h3>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Offenses strictly committed using ICT, directly targeting network systems, data confidentiality, integrity, and availability. [Image of network intrusion detection system console]
+                        Offenses strictly requiring ICT, directly targeting systems for destruction or data theft (technology-as-target offenses). Examples split across two cards.
                     </p>
                     <ul class="text-xs text-gray-400 space-y-1">
-                        <li class="ml-4">• Unauthorized access (logical or physical entry without credentials).</li>
-                        <li class="ml-4">• Modification/Impairment of data.</li>
-                        <li class="ml-4">• Interception of data (unauthorized alteration in transmission).</li>
-                        <li class="ml-4">• Misuse of assets.</li>
+                        <li class="font-medium text-white">Hacking:</li>
+                        <li class="ml-4">• Unauthorized access or interception of data.</li>
+                        <li class="ml-4">• Modification/Impairment of data integrity.</li>
+                        <li class="font-medium text-white">Malware:</li>
+                        <li class="ml-4">• Introduction of Viruses, Worms, or Trojans.</li>
                     </ul>
                 </div>
-
-                <!-- Threat Card 3: Cyber-Dependent Offenses (Malware) -->
-                <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-alert/50">
-                    <div class="w-12 h-12 rounded-lg bg-brand-alert/20 flex items-center justify-center mb-6 text-brand-alert/70">
-                        <i class="fas fa-virus text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Cyber-Dependent Offenses: Malware</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Software-based hacking tools intentionally malicious, targeting systems for destruction or data theft. 
-                    </p>
-                    <ul class="text-xs text-gray-400 space-y-1">
-                        <li class="ml-4">• Virus (self-replicates by changing programs).</li>
-                        <li class="ml-4">• Worm (standalone, replicates without human intervention).</li>
-                        <li class="ml-4">• Trojan (appears legitimate, but contains malicious payload).</li>
-                        <li class="ml-4">• Spyware (captures banking details, screenshots, etc.).</li>
-                    </ul>
-                </div>
-
+                
                  <!-- Threat Card 4: National Security Offenses (Cyberterrorism) -->
                  <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-red-600">
                     <div class="w-12 h-12 rounded-lg bg-red-600/20 flex items-center justify-center mb-6 text-red-600">
@@ -315,19 +317,19 @@
                     </div>
                     <h3 class="text-xl font-bold mb-3">National Security Offenses</h3>
                     <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Cyberterrorism: unlawful offenses engaging in terrorist activities against critical infrastructure. [Image of cyber attack on power grid]
+                        Cyberterrorism: unlawful offenses engaging in terrorist activities against critical infrastructure and government systems.
                     </p>
                     <ul class="text-xs text-gray-400 space-y-1">
                         <li class="ml-4">• Incursion (sudden invasive attacks on infrastructure).</li>
-                        <li class="ml-4">• Destruction (destroying data to make it unreadable/inaccessible).</li>
+                        <li class="ml-4">• Destruction of data systems.</li>
                         <li class="ml-4">• DDoS (Disrupting networks by making them inaccessible).</li>
-                        <li class="ml-4">• Defacement of Websites.</li>
+                        <li class="ml-4">• Website Defacement.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Technologies Section (Content from Handout) - scroll-target added -->
     <section id="defense" class="scroll-target py-20 px-6 bg-black/20 relative z-10"> 
         <div class="max-w-7xl mx-auto">
@@ -345,6 +347,7 @@
             <div class="space-y-4">
                 
                 <!-- Tech Item 1: Encryption -->
+                <!-- ADDING relative z-20 HERE -->
                 <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech1')">
                         <div class="flex items-center gap-4">
@@ -369,6 +372,7 @@
                 </div>
 
                 <!-- Tech Item 2: Biometrics & Authentication -->
+                <!-- ADDING relative z-20 HERE -->
                 <div class="glass rounded-xl overflow-hidden group relative z-20">
                     <div class="p-6 cursor-pointer flex justify-between items-center" onclick="toggleTech('tech2')">
                         <div class="flex items-center gap-4">
@@ -380,7 +384,7 @@
                     <div id="tech2" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Authentication validates the identity of an end user. **Biometrics** uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. [Image of biometric scanner]
+                                Authentication validates the identity of an end user. Biometrics uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. [Image of biometric scanner]
                                 <br><br>
                                 Examples: Optical/Ultrasonic/Capacitive Scanners, Access Tokens, Security Keys.
                             </p>
