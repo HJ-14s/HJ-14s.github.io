@@ -132,7 +132,6 @@
 <body class="antialiased relative">
 
     <!-- Background Elements -->
-    <!-- The pointer-events: none ensures this background layer does not capture mouse clicks -->
     <div class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
         <div class="blob-bg top-0 left-0 animate-blob"></div>
         <div class="blob-bg bottom-0 right-0 animate-blob" style="animation-delay: 2s; background: linear-gradient(180deg, rgba(248, 113, 113, 0.4) 0%, rgba(56, 189, 248, 0.4) 100%);"></div>
@@ -198,8 +197,8 @@
             <div id="team" class="scroll-target max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
                 
                 <!-- Hyacinth's Card -->
-                <div class="glass p-6 rounded-2xl flex items-center gap-4 hover:bg-white/10 transition-all duration-300 group text-left">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                <div class="glass p-6 rounded-2xl flex flex-col items-center gap-4 hover:bg-white/10 transition-all duration-300 group text-center">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
                         <!-- Hyacinth John Forones Photo -->
                         <img 
                             src="8e5d7d4a-c211-4c23-bb60-fa9359eea496.jpg" 
@@ -210,8 +209,14 @@
                     </div>
                     <div>
                         <h3 class="font-display font-bold text-lg text-white group-hover:text-brand-skyblue transition-colors">Hyacinth John Forones</h3>
-                        <p class="text-sm text-gray-400">Lead Security Analyst</p>
-                        <div class="flex gap-2 mt-2">
+                        <!-- UPDATED TITLE -->
+                        <p class="text-sm text-brand-skyblue font-medium">DCT Student / Aspiring Web Developer</p>
+                        <!-- ADDED CONTACT INFO -->
+                        <div class="flex flex-col items-center mt-3 text-xs text-gray-400 space-y-1">
+                            <span class="flex items-center gap-2"><i class="fas fa-envelope text-red-400"></i> forones95@gmail.com</span>
+                            <span class="flex items-center gap-2"><i class="fab fa-facebook-square text-blue-400"></i> HJ Forones</span>
+                        </div>
+                        <div class="flex gap-2 justify-center mt-3">
                             <span class="text-[10px] uppercase tracking-wider bg-brand-skyblue/20 text-brand-skyblue px-2 py-0.5 rounded">Network Security</span>
                             <span class="text-[10px] uppercase tracking-wider bg-brand-skyblue/20 text-brand-skyblue px-2 py-0.5 rounded">Forensics</span>
                         </div>
@@ -219,8 +224,8 @@
                 </div>
 
                 <!-- Melody's Card -->
-                <div class="glass p-6 rounded-2xl flex items-center gap-4 hover:bg-white/10 transition-all duration-300 group text-left">
-                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-400 to-pink-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                <div class="glass p-6 rounded-2xl flex flex-col items-center gap-4 hover:bg-white/10 transition-all duration-300 group text-center">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-400 to-pink-600 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
                         <!-- Melody Gulmatico's Photo -->
                         <img 
                             src="b4a3868a-e541-40c8-b781-64d57158b269.jpg" 
@@ -231,8 +236,14 @@
                     </div>
                     <div>
                         <h3 class="font-display font-bold text-lg text-white group-hover:text-brand-alert transition-colors">Melody Gulmatico</h3>
-                        <p class="text-sm text-gray-400">Cyber Intelligence Officer</p>
-                        <div class="flex gap-2 mt-2">
+                        <!-- UPDATED TITLE -->
+                        <p class="text-sm text-brand-skyblue font-medium">DCT Student / Aspiring Web Developer</p>
+                        <!-- ADDED CONTACT INFO -->
+                        <div class="flex flex-col items-center mt-3 text-xs text-gray-400 space-y-1">
+                            <span class="flex items-center gap-2"><i class="fas fa-envelope text-red-400"></i> melodygulmatico143@gmail.com</span>
+                            <span class="flex items-center gap-2"><i class="fab fa-facebook-square text-blue-400"></i> Melody Gulmatico</span>
+                        </div>
+                        <div class="flex gap-2 justify-center mt-3">
                             <span class="text-[10px] uppercase tracking-wider bg-brand-alert/20 text-brand-alert px-2 py-0.5 rounded">Cryptography</span>
                             <span class="text-[10px] uppercase tracking-wider bg-brand-alert/20 text-brand-alert px-2 py-0.5 rounded">Vulnerability Mgt.</span>
                         </div>
@@ -256,7 +267,6 @@
                 </div>
             </div>
 
-            <!-- Changed grid layout to 2x2 for desktop to accommodate the new card gracefully -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
                 <!-- Threat Card 1: Cyber-Enabled Offenses (Alert Red Border) -->
                 <div class="glass p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-brand-alert">
@@ -359,7 +369,8 @@
                     <div id="tech1" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                The technology of coding plaintext into unreadable ciphertext using encryption keys and algorithms. It protects against illegal and unauthorized access. [Image of asymmetric encryption process]
+                                The technology of coding plaintext into unreadable ciphertext using encryption keys and algorithms. It protects against illegal and unauthorized access. 
+                                [Image of asymmetric encryption process]
                                 <br><br>
                                 Examples: RSA, TDEA, Blowfish, Twofish.
                             </p>
@@ -384,7 +395,8 @@
                     <div id="tech2" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Authentication validates the identity of an end user. Biometrics uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. [Image of biometric scanner]
+                                Authentication validates the identity of an end user. Biometrics uses unique physical/behavioral traits (eyes, fingerprints, face) for higher security. 
+                                [Image of biometric scanner]
                                 <br><br>
                                 Examples: Optical/Ultrasonic/Capacitive Scanners, Access Tokens, Security Keys.
                             </p>
@@ -409,7 +421,8 @@
                     <div id="tech3" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                The first line of defense, serving as a barrier between networks. It blocks specific inbound packet types and eliminates unauthorized data access based on defined IT policies. [Image of network firewall blocking traffic]
+                                The first line of defense, serving as a barrier between networks. It blocks specific inbound packet types and eliminates unauthorized data access based on defined IT policies. 
+                                [Image of network firewall blocking traffic]
                                 <br><br>
                                 Examples: Network Address Translation (NAT), Packet-Filtering, VPNs.
                             </p>
@@ -436,6 +449,7 @@
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
                                 Software that prevents, detects, and removes malicious software. It scans new programs or files for matching virus signatures, flagging infected programs for blacklisting or isolation. 
+                                
                                 <br><br>
                                 Examples: On-Demand Scans, On-Access Scans, Boot-Time Scans.
                             </p>
@@ -461,7 +475,8 @@
                     <div id="tech5" class="hidden px-6 pb-6 pt-0 border-t border-white/5">
                         <div class="mt-4 grid md:grid-cols-2 gap-8">
                             <p class="text-gray-400 text-sm leading-relaxed">
-                                Technologies used to identify and prevent evolving phishing attacks by checking visual similarity, blacklists, and performing web crawling to find faults in web indexes. [Image of phishing detection flow chart]
+                                Technologies used to identify and prevent evolving phishing attacks by checking visual similarity, blacklists, and performing web crawling to find faults in web indexes. 
+                                [Image of phishing detection flow chart]
                                 <br><br>
                                 Types: Visual Similarity-Based, Blacklist-Based, Web Crawling-Based (WC-PAD).
                             </p>
@@ -601,9 +616,7 @@
         const decryptedTextEl = document.getElementById('decrypted-text');
         
         let isEncrypted = true;
-        // UPDATED: Changed message to just Zamboanga City
         const PLAIN_MESSAGE = "Zamboanga City";
-        // UPDATED: Adjusted cipher text for shorter message
         const CIPHER_MESSAGE = "F0C8B1E9A3D4G5H6J7K2"; 
         
         // Initialize the HTML content to reflect the new message
